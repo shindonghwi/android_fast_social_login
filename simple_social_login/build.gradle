@@ -36,7 +36,13 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    def kakao = "2.9.0"
+    def gson = "2.8.6"
+    implementation "com.kakao.sdk:v2-user:$kakao" // kakao login
+    implementation "com.google.code.gson:gson:$gson" // kakao proguard rule 적용을 위함.
+
+
 }
