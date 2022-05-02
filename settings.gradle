@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SimpleSocialLogin"
 include ':app'
+include ':simple_social_login'
