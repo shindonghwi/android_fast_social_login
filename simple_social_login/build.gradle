@@ -3,6 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey')
+def kakao_sdk_nativekey = properties.getProperty('kakao.sdk.nativeKey')
+
 android {
     compileSdk 32
 
@@ -12,14 +17,25 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        manifestPlaceholders = [
+                kakaoAppKey: kakao_sdk_appkey,
+                kakaoNativeKey: kakao_sdk_nativekey
+        ]
+        buildConfigField "String", "KAKAO_APP_KEY", kakao_sdk_appkey
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
