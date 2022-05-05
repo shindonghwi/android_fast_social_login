@@ -6,7 +6,8 @@ class KakaoLoginHelper {
 
     val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
-            // fail
+            com.kakao.sdk.auth.AuthCodeHandlerActivity().intent
+        // fail
         } else if (token != null) {
             // success
         }
