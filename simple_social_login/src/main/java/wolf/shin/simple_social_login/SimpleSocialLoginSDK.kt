@@ -14,5 +14,9 @@ class SimpleSocialLoginSDK{
         private val _loginStateFlow = MutableStateFlow<LoginState>(LoginState.Init)
         val loginStateFlow: StateFlow<LoginState> get() = _loginStateFlow
 
+        fun doKakaoLogin(){
+
+        }
+
     }
 }
