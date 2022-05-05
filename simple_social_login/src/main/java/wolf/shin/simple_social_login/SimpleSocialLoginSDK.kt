@@ -35,17 +35,17 @@ class SimpleSocialLoginSDK {
          * #########################
          * */
 
-        suspend fun doKakaoLogin(): StateFlow<LoginState> {
+        fun doKakaoLogin(): StateFlow<LoginState> {
             kakaoLoginHelper.doKakaoLogin(_loginStateFlow)
             return loginStateFlow
         }
 
-        suspend fun doKakaoLogout(): StateFlow<LogoutState>{
+        fun doKakaoLogout(): StateFlow<LogoutState> {
             kakaoLoginHelper.doKakaoLogout(_logoutStateFlow)
             return logoutStateFlow
         }
 
-        suspend fun doKakaoUnlink(): StateFlow<UnlinkState> {
+        fun doKakaoUnlink(): StateFlow<UnlinkState> {
             kakaoLoginHelper.doUnlink(_unlinkStateFlow)
             return unlinkStateFlow
         }
