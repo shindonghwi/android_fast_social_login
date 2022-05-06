@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey', null)
+def kakao_sdk_nativekey = properties.getProperty('kakao.sdk.nativekey', null)
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        manifestPlaceholders = [
+                kakaoAppKey: kakao_sdk_appkey,
+                kakaoNativeKey: kakao_sdk_nativekey
+        ]
+        buildConfigField "String", "KAKAO_APP_KEY", kakao_sdk_appkey
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+
+    def lifecycle = "2.4.1"
+    def coroutines = "1.6.1"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    def kakao = "2.9.0"
+    def gson = "2.8.6"
+    implementation "com.kakao.sdk:v2-user:$kakao" // kakao login
+    implementation "com.google.code.gson:gson:$gson" // kakao proguard rule 적용을 위함.
+
+
+}

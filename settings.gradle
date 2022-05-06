@@ -10,7 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
     }
 }
 rootProject.name = "SimpleSocialLogin"
 include ':app'
+include ':simple_social_login'
