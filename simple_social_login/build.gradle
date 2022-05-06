@@ -5,7 +5,7 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey')
+def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey', null)
 def kakao_sdk_nativekey = properties.getProperty('kakao.sdk.nativekey', null)
 
 android {
