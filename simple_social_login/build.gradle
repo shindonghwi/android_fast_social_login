@@ -1,10 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+properties.load(project.rootProject.file('social.properties').newDataInputStream())
 def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey', null)
 def kakao_sdk_nativekey = properties.getProperty('kakao.sdk.nativekey', null)
 
