@@ -55,10 +55,17 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
+    // K A K A O
     def kakao = "2.9.0"
     def gson = "2.8.6"
     implementation "com.kakao.sdk:v2-user:$kakao" // kakao login
     implementation "com.google.code.gson:gson:$gson" // kakao proguard rule 적용을 위함.
 
+    // G O O G L E
+    def firebaseBom = "29.3.1"
+    def playServiceAuth = "20.2.0"
+    implementation platform("com.google.firebase:firebase-bom:$firebaseBom")
+    implementation "com.google.firebase:firebase-auth-ktx"
+    implementation "com.google.android.gms:play-services-auth:$playServiceAuth"
 
 }
