@@ -56,7 +56,7 @@ class SimpleSocialLoginSDK {
         }
 
         fun doKakaoUnlink(): StateFlow<UnlinkState> {
-            kakaoLoginHelper.doUnlink(_unlinkStateFlow)
+            kakaoLoginHelper.doKakaoUnlink(_unlinkStateFlow)
             return unlinkStateFlow
         }
 

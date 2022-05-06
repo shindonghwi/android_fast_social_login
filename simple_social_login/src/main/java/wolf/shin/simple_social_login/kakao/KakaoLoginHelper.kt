@@ -65,7 +65,7 @@ class KakaoLoginHelper(
     }
 
     /** 카카오 연결해제 */
-    override fun doUnlink(unlinkFlow: MutableStateFlow<UnlinkState>) {
+    override fun doKakaoUnlink(unlinkFlow: MutableStateFlow<UnlinkState>) {
         unlinkFlow.value = UnlinkState.Loading
         UserApiClient.instance.unlink { error: Throwable? ->
             if (error != null) {
