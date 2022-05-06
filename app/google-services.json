@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "135189940864",
+    "project_id": "simple-social-login-8ecdf",
+    "storage_bucket": "simple-social-login-8ecdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135189940864:android:c27ce7bd0e5171c8d83465",
+        "android_client_info": {
+          "package_name": "wolf.shin.simplesociallogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135189940864-ubpq542173j7bflrcaf4usm9v10mbhni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvIWRKitOTJpC5zLszq7FldUkaSHONj54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135189940864-ubpq542173j7bflrcaf4usm9v10mbhni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
