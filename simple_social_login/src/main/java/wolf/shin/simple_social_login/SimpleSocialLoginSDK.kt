@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import wolf.shin.simple_social_login.common.CommonHelper
 import wolf.shin.simple_social_login.common.StateFlowData
+import wolf.shin.simple_social_login.google.GoogleLoginHelper
 import wolf.shin.simple_social_login.google.IGoogle
 import wolf.shin.simple_social_login.kakao.IKakao
 import wolf.shin.simple_social_login.kakao.KakaoLoginHelper
@@ -19,6 +20,7 @@ class SimpleSocialLoginSDK {
         private val activity: Activity
     ) : IKakao, IGoogle {
         private val kakaoLoginHelper: KakaoLoginHelper = KakaoLoginHelper(activity)
+        private val googleLoginHelper: GoogleLoginHelper = GoogleLoginHelper(activity)
 
         /**
          * #########################
@@ -70,7 +72,7 @@ class SimpleSocialLoginSDK {
         )
 
         override fun doGoogleLogin(): StateFlow<LoginState<String>> {
-//            kakaoLoginHelper.doKakaoLogin(_loginStateFlow)
+            googleLoginHelper.doGoogleLogin(googleFlowData.loginFlow)
             return googleFlowData.loginFlow
         }
 
