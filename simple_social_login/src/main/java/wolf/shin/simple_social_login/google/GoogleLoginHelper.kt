@@ -1,11 +1,10 @@
 package wolf.shin.simple_social_login.google
 
 import android.app.Activity
+import android.content.Intent
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import wolf.shin.simple_social_login.model.LoginState
 import wolf.shin.simple_social_login.model.LogoutState
@@ -16,8 +15,6 @@ class GoogleLoginHelper(
     private val activity: Activity
 ) : IGoogleLoginApi {
 
-    private var auth: FirebaseAuth = Firebase.auth
-
     private var gso: GoogleSignInOptions? = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
@@ -27,7 +24,8 @@ class GoogleLoginHelper(
 
     /** 구글 로그인 */
     override fun doGoogleLogin(loginFlow: MutableStateFlow<LoginState<String>>) {
-        TODO("Not yet implemented")
+        val signInIntent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(activity, signInIntent, 100, null)
     }
 
     /** 구글 로그아웃 */
