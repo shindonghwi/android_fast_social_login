@@ -13,15 +13,16 @@ import wolf.shin.simple_social_login.model.UnlinkState
 
 class KakaoLoginHelper(
     private val activity: Activity
-) : iKakaoLoginApi {
+) : IKakaoLoginApi {
 
     init {
         KakaoSdk.init(activity, BuildConfig.KAKAO_APP_KEY)
     }
 
     /** 카카오 로그인 */
-    override fun doKakaoLogin(loginFlow: MutableStateFlow<LoginState>) {
+    override fun doKakaoLogin(loginFlow: MutableStateFlow<LoginState<String>>) {
         loginFlow.value = LoginState.Loading
+
         with(activity) {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error: Throwable? ->
