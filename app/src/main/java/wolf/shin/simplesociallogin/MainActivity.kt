@@ -3,9 +3,13 @@ package wolf.shin.simplesociallogin
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import wolf.shin.simple_social_login.SimpleSocialLoginSDK
-import wolf.shin.simplesociallogin.social_component.kakao.KakaoButton
+import wolf.shin.simplesociallogin.social_component.kakao.KakaoView
 import wolf.shin.simplesociallogin.ui.theme.SimpleSocialLoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +23,10 @@ class MainActivity : ComponentActivity() {
                     simpleSocialLoginSDK = SimpleSocialLoginSDK.Builder(this@MainActivity)
                 }
 
-                KakaoButton(socialLoginVM.simpleSocialLoginSDK)
+                Scaffold(modifier = Modifier.padding(all = 16.dp)) {
+                    KakaoView(socialLoginVM.simpleSocialLoginSDK)
+                }
+
 
             }
         }
