@@ -3,7 +3,9 @@ package wolf.shin.simple_social_login
 import android.app.Activity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import wolf.shin.simple_social_login.common.CommonHelper
 import wolf.shin.simple_social_login.kakao.KakaoLoginHelper
+import wolf.shin.simple_social_login.kakao.iKakaoLoginApi
 import wolf.shin.simple_social_login.model.LoginState
 import wolf.shin.simple_social_login.model.LogoutState
 import wolf.shin.simple_social_login.model.UnlinkState
@@ -28,6 +30,15 @@ class SimpleSocialLoginSDK {
         private val _unlinkStateFlow = MutableStateFlow<UnlinkState>(UnlinkState.Init)
         val unlinkStateFlow: StateFlow<UnlinkState> get() = _unlinkStateFlow
 
+        /**
+         * #########################
+         * #### C O M M O N
+         * #########################
+         * */
+
+        fun getDebugHashKey(): String? {
+            return CommonHelper.getDebugHashKey(activity)
+        }
 
         /**
          * #########################
