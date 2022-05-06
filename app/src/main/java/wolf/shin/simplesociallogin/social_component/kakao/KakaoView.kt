@@ -86,7 +86,7 @@ fun KakaoView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
         KakaoLogoutStateView(simpleSocialLoginSDK.kakaoFlowData.logoutFlow)
         KakaoUnlinkStateView(simpleSocialLoginSDK.kakaoFlowData.unlinkFlow)
 
-        Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), color = OutLine60)
+        Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), color = OutLine60)
     }
 }
 
