@@ -5,8 +5,8 @@ import wolf.shin.simple_social_login.model.LoginState
 import wolf.shin.simple_social_login.model.LogoutState
 import wolf.shin.simple_social_login.model.UnlinkState
 
-interface iKakaoLoginApi {
-    fun doKakaoLogin(loginFlow: MutableStateFlow<LoginState>)
+interface IKakaoLoginApi {
+    fun doKakaoLogin(loginFlow: MutableStateFlow<LoginState<String>>)
     fun doKakaoLogout(logoutFlow: MutableStateFlow<LogoutState>)
     fun doUnlink(unlinkFlow: MutableStateFlow<UnlinkState>)
 }
