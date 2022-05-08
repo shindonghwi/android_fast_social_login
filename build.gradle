@@ -47,7 +47,9 @@ task findGoogleServiceJson() {
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('social.properties').newDataInputStream())
-    properties.setProperty("google.apikey", clientId)
+    properties.setProperty("google.client.id", clientId)
+
+
 }
 
 
