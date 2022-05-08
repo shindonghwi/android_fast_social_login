@@ -14,9 +14,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
 
-
-
-
 task findGoogleServiceJson() {
     def pathList = []
     def path = ""
@@ -47,9 +44,9 @@ task findGoogleServiceJson() {
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('social.properties').newDataInputStream())
+    properties.put("google.client.id", clientId)
     properties.setProperty("google.client.id", clientId)
-
-
+    properties.store(new FileOutputStream(project.file("social.properties"),false), "SimpleSocialKey Info")
 }
 
 
