@@ -6,8 +6,10 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('social.properties').newDataInputStream())
+
 def kakao_sdk_appkey = properties.getProperty('kakao.sdk.appkey', null)
 def kakao_sdk_nativekey = properties.getProperty('kakao.sdk.nativekey', null)
+def google_client_id = properties.getProperty('google.client.id', null)
 
 android {
     compileSdk 32
@@ -24,6 +26,7 @@ android {
                 kakaoNativeKey: kakao_sdk_nativekey
         ]
         buildConfigField "String", "KAKAO_APP_KEY", kakao_sdk_appkey
+//        buildConfigField "String", "GOOGLE_CLIENT_ID", google_client_id
     }
 
     buildTypes {
