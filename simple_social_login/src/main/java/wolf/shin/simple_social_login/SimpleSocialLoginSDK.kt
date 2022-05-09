@@ -1,6 +1,6 @@
 package wolf.shin.simple_social_login
 
-import android.app.Activity
+import android.content.Context
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import wolf.shin.simple_social_login.common.CommonHelper
@@ -17,10 +17,10 @@ import wolf.shin.simple_social_login.model.UnlinkState
 class SimpleSocialLoginSDK {
 
     class Builder(
-        private val activity: Activity
+        private val context: Context
     ) : IKakao, IGoogle {
-        private val kakaoLoginHelper: KakaoLoginHelper = KakaoLoginHelper(activity)
-        private val googleLoginHelper: GoogleLoginHelper = GoogleLoginHelper(activity)
+        private val kakaoLoginHelper: KakaoLoginHelper = KakaoLoginHelper(context)
+        private val googleLoginHelper: GoogleLoginHelper = GoogleLoginHelper(context)
 
         /**
          * #########################
@@ -29,7 +29,7 @@ class SimpleSocialLoginSDK {
          * */
 
         fun getDebugHashKey(): String? {
-            return CommonHelper.getDebugHashKey(activity)
+            return CommonHelper.getDebugHashKey(context)
         }
 
         /**

@@ -1,6 +1,6 @@
 package wolf.shin.simple_social_login.kakao
 
-import android.app.Activity
+import android.content.Context
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.AuthError
 import com.kakao.sdk.user.UserApiClient
@@ -11,19 +11,17 @@ import wolf.shin.simple_social_login.model.LogoutState
 import wolf.shin.simple_social_login.model.UnlinkState
 
 
-class KakaoLoginHelper(
-    private val activity: Activity
-) : IKakaoLoginApi {
+class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
 
     init {
-        KakaoSdk.init(activity, BuildConfig.KAKAO_APP_KEY)
+        KakaoSdk.init(context, BuildConfig.KAKAO_APP_KEY)
     }
 
     /** 카카오 로그인 */
     override fun doKakaoLogin(loginFlow: MutableStateFlow<LoginState<String>>) {
         loginFlow.value = LoginState.Loading
 
-        with(activity) {
+        with(context) {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error: Throwable? ->
                     if (error != null) {

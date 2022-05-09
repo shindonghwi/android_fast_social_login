@@ -1,6 +1,6 @@
 package wolf.shin.simple_social_login.google
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -12,18 +12,18 @@ import wolf.shin.simple_social_login.model.UnlinkState
 
 
 class GoogleLoginHelper(
-    private val activity: Activity
+    private val context: Context
 ) : IGoogleLoginApi {
 
     private var gso: GoogleSignInOptions? = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
 
-    private val googleSignInClient = GoogleSignIn.getClient(activity.applicationContext, gso!!)
+    private val googleSignInClient = GoogleSignIn.getClient(context, gso!!)
 
     /** 구글 로그인 */
     override fun doGoogleLogin(loginFlow: MutableStateFlow<LoginState<String>>) {
-        GoogleSignInActivity.launch(activity, googleSignInClient.signInIntent, object : OnActivityResultListener {
+        GoogleSignInActivity.launch(context, googleSignInClient.signInIntent, object : OnActivityResultListener {
             override fun onActivityResult(resultCode: Int, intent: Intent?) {
 
             }
