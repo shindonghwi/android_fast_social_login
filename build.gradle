@@ -14,42 +14,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
 
-task findGoogleServiceJson() {
-    def pathList = []
-    def path = ""
-    def clientId = ""
-    for (module in project.childProjects.keySet()){
-        fileTree(module + "/google-services.json").visit { FileVisitDetails details ->
-            if (!details.file.path.isEmpty()){
-                pathList << details.file.path
-
-                if (!pathList.isEmpty()){
-                    path = pathList.get(0)
-                }
-
-                return
-            }
-        }
-    }
-
-    if (!path.isEmpty()){
-        def Properties props = new Properties()
-        def propFile = file(path)
-
-        if (propFile.canRead()) {
-            props.load(new FileInputStream(propFile))
-            clientId = props.toString().split("\"client_id\"=\"")[1].split("\"")[0]
-        }
-    }
-
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('social.properties').newDataInputStream())
-    properties.put("google.client.id", clientId)
-    properties.setProperty("google.client.id", "\"$clientId\"")
-    properties.store(new FileOutputStream(project.file("social.properties"),false), "SimpleSocialKey Info")
-}
-
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
