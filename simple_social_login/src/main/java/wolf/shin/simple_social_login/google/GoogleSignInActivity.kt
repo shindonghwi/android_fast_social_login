@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import wolf.shin.simple_social_login.BuildConfig
+import wolf.shin.simple_social_login.SimpleSocialLoginSDK.Companion.TAG
 
 class GoogleSignInActivity : AppCompatActivity() {
 
@@ -39,21 +40,21 @@ class GoogleSignInActivity : AppCompatActivity() {
 
 
         val launcher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            Log.d("asdasdsad", "launcher result: $it")
+            Log.d(TAG, "launcher result: $it")
             finish()
         }
 
         oneTapClient.beginSignIn(signUpRequest)
             .addOnSuccessListener(this) { result ->
-                Log.d("asdasdsad", "success: $result")
+                Log.d(TAG, "addOnSuccessListener $result")
                 try {
                     launcher.launch(IntentSenderRequest.Builder(result.pendingIntent.intentSender).build())
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.d("asdasdsad", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    Log.d(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
             }
             .addOnFailureListener(this) { e ->
-                Log.d("asdasdsad", "fail: ${e.localizedMessage}")
+                Log.d(TAG, "addOnFailureListener가: ${e.localizedMessage}")
             }
     }
 
