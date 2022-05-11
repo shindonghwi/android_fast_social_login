@@ -87,4 +87,9 @@ class SimpleSocialLoginSDK {
         }
 
     }
+
+
+    companion object{
+        val TAG = "WOLF_LOG"
+    }
 }
