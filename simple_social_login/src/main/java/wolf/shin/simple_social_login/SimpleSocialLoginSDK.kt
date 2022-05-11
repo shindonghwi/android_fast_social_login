@@ -19,8 +19,10 @@ class SimpleSocialLoginSDK {
     class Builder(
         private val context: Context
     ) : IKakao, IGoogle {
+
         private val kakaoLoginHelper: KakaoLoginHelper = KakaoLoginHelper(context)
         private val googleLoginHelper: GoogleLoginHelper = GoogleLoginHelper(context)
+
 
         /**
          * #########################
@@ -38,11 +40,7 @@ class SimpleSocialLoginSDK {
          * #########################
          * */
 
-        val kakaoFlowData = StateFlowData(
-            loginFlow = MutableStateFlow(LoginState.Init),
-            logoutFlow = MutableStateFlow(LogoutState.Init),
-            unlinkFlow = MutableStateFlow(UnlinkState.Init),
-        )
+        val kakaoState = kakaoLoginHelper.kakaoFlowData
 
         override fun doKakaoLogin(): StateFlow<LoginState<String>> {
             kakaoLoginHelper.doKakaoLogin()
@@ -56,7 +54,7 @@ class SimpleSocialLoginSDK {
 
         override fun doKakaoUnlink(): StateFlow<UnlinkState> {
             kakaoLoginHelper.doKakaoUnlink()
-            return kakaoFlowData.unlinkFlow
+            return kakaoLoginHelper.kakaoFlowData.unlinkFlow
         }
 
         /**

@@ -43,6 +43,8 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
 
                     if (token != null) {
                         kakaoFlowData.loginFlow.value = LoginState.Success(token = token.accessToken)
+                        kakaoFlowData.logoutFlow.value = LogoutState.Init
+                        kakaoFlowData.unlinkFlow.value = UnlinkState.Init
                     }
                 }
             } else {
@@ -54,6 +56,8 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
                     }
                     if (token != null) {
                         kakaoFlowData.loginFlow.value = LoginState.Success(token = token.accessToken)
+                        kakaoFlowData.logoutFlow.value = LogoutState.Init
+                        kakaoFlowData.unlinkFlow.value = UnlinkState.Init
                     }
                 }
             }
@@ -69,6 +73,7 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
                 return@logout
             }
             kakaoFlowData.logoutFlow.value = LogoutState.Success
+            kakaoFlowData.loginFlow.value = LoginState.Init
         }
     }
 
@@ -81,6 +86,7 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
                 return@unlink
             }
             kakaoFlowData.unlinkFlow.value = UnlinkState.Success
+            kakaoFlowData.loginFlow.value = LoginState.Init
         }
     }
 
