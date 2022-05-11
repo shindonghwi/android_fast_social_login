@@ -73,14 +73,14 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
     }
 
     /** 카카오 연결해제 */
-    override fun doKakaoUnlink(unlinkFlow: MutableStateFlow<UnlinkState>) {
-        unlinkFlow.value = UnlinkState.Loading
+    override fun doKakaoUnlink() {
+        kakaoFlowData.unlinkFlow.value = UnlinkState.Loading
         UserApiClient.instance.unlink { error: Throwable? ->
             if (error != null) {
-                unlinkFlow.value = UnlinkState.Error(message = error.message)
+                kakaoFlowData.unlinkFlow.value = UnlinkState.Error(message = error.message)
                 return@unlink
             }
-            unlinkFlow.value = UnlinkState.Success
+            kakaoFlowData.unlinkFlow.value = UnlinkState.Success
         }
     }
 
