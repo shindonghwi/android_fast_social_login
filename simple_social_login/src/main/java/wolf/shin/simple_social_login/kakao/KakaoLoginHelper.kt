@@ -61,14 +61,14 @@ class KakaoLoginHelper(private val context: Context) : IKakaoLoginApi {
     }
 
     /** 카카오 로그아웃 */
-    override fun doKakaoLogout(logoutFlow: MutableStateFlow<LogoutState>) {
-        logoutFlow.value = LogoutState.Loading
+    override fun doKakaoLogout() {
+        kakaoFlowData.logoutFlow.value = LogoutState.Loading
         UserApiClient.instance.logout { error: Throwable? ->
             if (error != null) {
-                logoutFlow.value = LogoutState.Error(message = error.message)
+                kakaoFlowData.logoutFlow.value = LogoutState.Error(message = error.message)
                 return@logout
             }
-            logoutFlow.value = LogoutState.Success
+            kakaoFlowData.logoutFlow.value = LogoutState.Success
         }
     }
 

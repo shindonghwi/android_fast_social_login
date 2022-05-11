@@ -50,8 +50,8 @@ class SimpleSocialLoginSDK {
         }
 
         override fun doKakaoLogout(): StateFlow<LogoutState> {
-            kakaoLoginHelper.doKakaoLogout(kakaoFlowData.logoutFlow)
-            return kakaoFlowData.logoutFlow
+            kakaoLoginHelper.doKakaoLogout()
+            return kakaoLoginHelper.kakaoFlowData.logoutFlow
         }
 
         override fun doKakaoUnlink(): StateFlow<UnlinkState> {
