@@ -1,10 +1,11 @@
 package wolf.shin.simple_social_login.google
 
+import android.content.Context
+import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,8 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import wolf.shin.simple_social_login.BuildConfig
-import wolf.shin.simple_social_login.SimpleSocialLoginSDK.Companion.TAG
+import wolf.shin.simple_social_login.interfaces.IActivityResultCallback
+import wolf.shin.simple_social_login.model.ActivityCallbackState
 
 class GoogleSignInActivity : AppCompatActivity() {
 
@@ -21,12 +23,10 @@ class GoogleSignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setFinishOnTouchOutside(false)
 
         oneTapClient = Identity.getSignInClient(this)
-
         signUpRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
@@ -35,27 +35,48 @@ class GoogleSignInActivity : AppCompatActivity() {
                     .setFilterByAuthorizedAccounts(false)
                     .build()
             )
-            .setAutoSelectEnabled(true)
             .build()
 
-
         val launcher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            Log.d(TAG, "launcher result: $it")
+
+            val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
+            val idToken = credential.googleIdToken
+            val username = credential.id
+            val password = credential.password
+
+            when (it.resultCode) {
+                RESULT_OK -> {
+                    iActivityResultCallback.callbackState(ActivityCallbackState.Success(token = idToken.toString()))
+                }
+                else -> {
+                    iActivityResultCallback.callbackState(ActivityCallbackState.Error("Not found Credential Info !"))
+                }
+            }
             finish()
         }
 
         oneTapClient.beginSignIn(signUpRequest)
             .addOnSuccessListener(this) { result ->
-                Log.d(TAG, "addOnSuccessListener $result")
                 try {
+                    iActivityResultCallback.callbackState(ActivityCallbackState.Loading)
                     launcher.launch(IntentSenderRequest.Builder(result.pendingIntent.intentSender).build())
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.d(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    iActivityResultCallback.callbackState(ActivityCallbackState.Error(e.message))
                 }
             }
             .addOnFailureListener(this) { e ->
-                Log.d(TAG, "addOnFailureListener가: ${e.localizedMessage}")
+                iActivityResultCallback.callbackState(ActivityCallbackState.Error(e.message))
             }
     }
 
+    companion object {
+        private lateinit var iActivityResultCallback: IActivityResultCallback
+
+        fun startActivityForResult(context: Context, iCallback: IActivityResultCallback) {
+            iActivityResultCallback = iCallback.apply {
+                callbackState(ActivityCallbackState.Init)
+            }
+            context.startActivity(Intent(context, GoogleSignInActivity::class.java))
+        }
+    }
 }
