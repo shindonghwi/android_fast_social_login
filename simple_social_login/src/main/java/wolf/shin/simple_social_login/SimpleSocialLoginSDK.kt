@@ -1,10 +1,8 @@
 package wolf.shin.simple_social_login
 
 import android.content.Context
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import wolf.shin.simple_social_login.common.CommonHelper
-import wolf.shin.simple_social_login.common.StateFlowData
 import wolf.shin.simple_social_login.google.GoogleLoginHelper
 import wolf.shin.simple_social_login.google.IGoogle
 import wolf.shin.simple_social_login.kakao.IKakao
@@ -43,18 +41,24 @@ class SimpleSocialLoginSDK {
         val kakaoState = kakaoLoginHelper.kakaoFlowData
 
         override fun doKakaoLogin(): StateFlow<LoginState<String>> {
-            kakaoLoginHelper.doKakaoLogin()
-            return kakaoLoginHelper.kakaoFlowData.loginFlow
+            return kakaoLoginHelper.run {
+                doKakaoLogin()
+                kakaoFlowData.loginFlow
+            }
         }
 
         override fun doKakaoLogout(): StateFlow<LogoutState> {
-            kakaoLoginHelper.doKakaoLogout()
-            return kakaoLoginHelper.kakaoFlowData.logoutFlow
+            return kakaoLoginHelper.run {
+                doKakaoLogout()
+                kakaoFlowData.logoutFlow
+            }
         }
 
         override fun doKakaoUnlink(): StateFlow<UnlinkState> {
-            kakaoLoginHelper.doKakaoUnlink()
-            return kakaoLoginHelper.kakaoFlowData.unlinkFlow
+            return kakaoLoginHelper.run {
+                doKakaoUnlink()
+                kakaoFlowData.unlinkFlow
+            }
         }
 
         /**
@@ -63,31 +67,33 @@ class SimpleSocialLoginSDK {
          * #########################
          * */
 
-        val googleFlowData = StateFlowData(
-            loginFlow = MutableStateFlow(LoginState.Init),
-            logoutFlow = MutableStateFlow(LogoutState.Init),
-            unlinkFlow = MutableStateFlow(UnlinkState.Init),
-        )
+        val googleState = googleLoginHelper.googleFlowData
 
         override fun doGoogleLogin(): StateFlow<LoginState<String>> {
-            googleLoginHelper.doGoogleLogin(googleFlowData.loginFlow)
-            return googleFlowData.loginFlow
+            return googleLoginHelper.run {
+                doGoogleLogin()
+                googleFlowData.loginFlow
+            }
         }
 
         override fun doGoogleLogout(): StateFlow<LogoutState> {
-//            kakaoLoginHelper.doKakaoLogout(_logoutStateFlow)
-            return googleFlowData.logoutFlow
+            return googleLoginHelper.run {
+                doGoogleLogout()
+                googleFlowData.logoutFlow
+            }
         }
 
         override fun doGoogleUnlink(): StateFlow<UnlinkState> {
-//            kakaoLoginHelper.doKakaoUnlink(_unlinkStateFlow)
-            return googleFlowData.unlinkFlow
+            return googleLoginHelper.run {
+                doGoogleUnlink()
+                googleFlowData.unlinkFlow
+            }
         }
 
     }
 
 
-    companion object{
+    companion object {
         val TAG = "WOLF_LOG"
     }
 }
