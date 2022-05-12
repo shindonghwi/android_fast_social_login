@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import wolf.shin.simple_social_login.SimpleSocialLoginSDK
 import wolf.shin.simplesociallogin.social_component.google.GoogleView
 import wolf.shin.simplesociallogin.social_component.kakao.KakaoView
+import wolf.shin.simplesociallogin.social_component.naver.NaverView
 import wolf.shin.simplesociallogin.ui.theme.SimpleSocialLoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,6 +31,8 @@ class MainActivity : ComponentActivity() {
                         KakaoView(socialLoginVM.simpleSocialLoginSDK)
 
                         GoogleView(socialLoginVM.simpleSocialLoginSDK)
+
+                        NaverView(socialLoginVM.simpleSocialLoginSDK)
                     }
                 }
 
