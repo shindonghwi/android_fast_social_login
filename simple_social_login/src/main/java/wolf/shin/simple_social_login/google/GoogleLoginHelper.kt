@@ -1,6 +1,7 @@
 package wolf.shin.simple_social_login.google
 
 import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,18 @@ class GoogleLoginHelper(
         logoutFlow = MutableStateFlow(LogoutState.Init),
         unlinkFlow = MutableStateFlow(UnlinkState.Init),
     )
+
+    private val authStateListener = FirebaseAuth.AuthStateListener {
+        if (googleFlowData.loginFlow.value is LoginState.Success && it.currentUser == null) {
+            googleFlowData.logoutFlow.value = LogoutState.Success
+            googleFlowData.loginFlow.value = LoginState.Init
+            googleFlowData.unlinkFlow.value = UnlinkState.Init
+        }
+    }
+
+    init {
+        FirebaseAuth.getInstance().addAuthStateListener(authStateListener)
+    }
 
     /** 구글 로그인 */
     override fun doGoogleLogin() {
@@ -51,10 +64,11 @@ class GoogleLoginHelper(
 
     /** 구글 로그아웃 */
     override fun doGoogleLogout() {
-        Firebase.auth.signOut()
-        googleFlowData.logoutFlow.value = LogoutState.Success
-        googleFlowData.loginFlow.value = LoginState.Init
-        googleFlowData.unlinkFlow.value = UnlinkState.Init
+        if (googleFlowData.loginFlow.value is LoginState.Success) {
+            Firebase.auth.signOut()
+        } else {
+            googleFlowData.logoutFlow.value = LogoutState.Error("No accounts are currently logged in to Firebase")
+        }
     }
 
     /** 구글 연결해제 */
@@ -69,8 +83,8 @@ class GoogleLoginHelper(
                 .addOnFailureListener {
                     googleFlowData.unlinkFlow.value = UnlinkState.Error(it.message)
                 }
-        }?: kotlin.run {
-            googleFlowData.unlinkFlow.value = UnlinkState.Error("Firebase Current User Credential Not Found")
+        } ?: kotlin.run {
+            googleFlowData.unlinkFlow.value = UnlinkState.Error("Account information not found in Firebase")
         }
     }
 }
