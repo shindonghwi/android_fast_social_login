@@ -83,9 +83,9 @@ fun GoogleView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
         }
 
 
-        GoogleLoginStateView(simpleSocialLoginSDK.googleFlowData.loginFlow)
-        GoogleLogoutStateView(simpleSocialLoginSDK.googleFlowData.logoutFlow)
-        GoogleUnlinkStateView(simpleSocialLoginSDK.googleFlowData.unlinkFlow)
+        GoogleLoginStateView(simpleSocialLoginSDK.googleState.loginFlow)
+        GoogleLogoutStateView(simpleSocialLoginSDK.googleState.logoutFlow)
+        GoogleUnlinkStateView(simpleSocialLoginSDK.googleState.unlinkFlow)
 
         Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), color = OutLine60)
     }

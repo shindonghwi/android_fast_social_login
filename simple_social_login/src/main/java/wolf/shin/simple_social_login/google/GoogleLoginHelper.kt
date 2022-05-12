@@ -1,7 +1,10 @@
 package wolf.shin.simple_social_login.google
 
 import android.content.Context
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
+import wolf.shin.simple_social_login.common.StateFlowData
 import wolf.shin.simple_social_login.interfaces.IActivityResultCallback
 import wolf.shin.simple_social_login.model.ActivityCallbackState
 import wolf.shin.simple_social_login.model.LoginState
@@ -13,23 +16,31 @@ class GoogleLoginHelper(
     private val context: Context
 ) : IGoogleLoginApi {
 
+    val googleFlowData = StateFlowData(
+        loginFlow = MutableStateFlow(LoginState.Init),
+        logoutFlow = MutableStateFlow(LogoutState.Init),
+        unlinkFlow = MutableStateFlow(UnlinkState.Init),
+    )
+
     /** 구글 로그인 */
-    override fun doGoogleLogin(loginFlow: MutableStateFlow<LoginState<String>>) {
+    override fun doGoogleLogin() {
         GoogleSignInActivity.startActivityForResult(context, object : IActivityResultCallback {
             override fun <T> callbackState(state: ActivityCallbackState<T>) {
 
-                when(state){
+                when (state) {
                     is ActivityCallbackState.Init -> {
-                        loginFlow.value = LoginState.Init
+                        googleFlowData.loginFlow.value = LoginState.Init
                     }
                     is ActivityCallbackState.Loading -> {
-                        loginFlow.value = LoginState.Loading
+                        googleFlowData.loginFlow.value = LoginState.Loading
                     }
                     is ActivityCallbackState.Success -> {
-                        loginFlow.value = LoginState.Success(token = state.token)
+                        googleFlowData.logoutFlow.value = LogoutState.Init
+                        googleFlowData.unlinkFlow.value = UnlinkState.Init
+                        googleFlowData.loginFlow.value = LoginState.Success(token = state.token)
                     }
                     is ActivityCallbackState.Error -> {
-                        loginFlow.value = LoginState.Error(message = state.message)
+                        googleFlowData.loginFlow.value = LoginState.Error(message = state.message)
                     }
                 }
             }
@@ -39,12 +50,27 @@ class GoogleLoginHelper(
 
 
     /** 구글 로그아웃 */
-    override fun doGoogleLogout(logoutFlow: MutableStateFlow<LogoutState>) {
-        TODO("Not yet implemented")
+    override fun doGoogleLogout() {
+        Firebase.auth.signOut()
+        googleFlowData.logoutFlow.value = LogoutState.Success
+        googleFlowData.loginFlow.value = LoginState.Init
+        googleFlowData.unlinkFlow.value = UnlinkState.Init
     }
 
     /** 구글 연결해제 */
-    override fun doUnlink(unlinkFlow: MutableStateFlow<UnlinkState>) {
-        TODO("Not yet implemented")
+    override fun doGoogleUnlink() {
+        Firebase.auth.currentUser?.run {
+            delete()
+                .addOnSuccessListener {
+                    googleFlowData.loginFlow.value = LoginState.Init
+                    googleFlowData.logoutFlow.value = LogoutState.Init
+                    googleFlowData.unlinkFlow.value = UnlinkState.Success
+                }
+                .addOnFailureListener {
+                    googleFlowData.unlinkFlow.value = UnlinkState.Error(it.message)
+                }
+        }?: kotlin.run {
+            googleFlowData.unlinkFlow.value = UnlinkState.Error("Firebase Current User Credential Not Found")
+        }
     }
 }
