@@ -1,4 +1,4 @@
-package wolf.shin.simplesociallogin.social_component.kakao
+package wolf.shin.simplesociallogin.social_component.google
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,27 +23,28 @@ import wolf.shin.simple_social_login.SimpleSocialLoginSDK
 import wolf.shin.simple_social_login.model.LoginState
 import wolf.shin.simple_social_login.model.LogoutState
 import wolf.shin.simple_social_login.model.UnlinkState
+import wolf.shin.simplesociallogin.ui.theme.Gray300
 import wolf.shin.simplesociallogin.ui.theme.Gray800
 import wolf.shin.simplesociallogin.ui.theme.KakaoColor
 import wolf.shin.simplesociallogin.ui.theme.OutLine60
 
 @Composable
-fun KakaoView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
+fun GoogleView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
 
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "카카오", style = MaterialTheme.typography.h6, color = Gray800)
+            Text(text = "구글", style = MaterialTheme.typography.h6, color = Gray800)
 
             Text(
                 modifier = Modifier
                     .padding(start = 12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(KakaoColor)
+                    .background(Gray300)
                     .clickable {
-                        simpleSocialLoginSDK.doKakaoLogin()
+                        simpleSocialLoginSDK.doGoogleLogin()
                     }
                     .padding(all = 4.dp),
                 text = "로그인",
@@ -55,10 +56,10 @@ fun KakaoView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
                 modifier = Modifier
                     .padding(start = 12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(KakaoColor)
+                    .background(Gray300)
                     .padding(all = 4.dp)
                     .clickable {
-                        simpleSocialLoginSDK.doKakaoLogout()
+                        simpleSocialLoginSDK.doGoogleLogout()
                     },
                 text = "로그아웃",
                 style = MaterialTheme.typography.subtitle1,
@@ -69,10 +70,10 @@ fun KakaoView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
                 modifier = Modifier
                     .padding(start = 12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(KakaoColor)
+                    .background(Gray300)
                     .padding(all = 4.dp)
                     .clickable {
-                        simpleSocialLoginSDK.doKakaoUnlink()
+                        simpleSocialLoginSDK.doGoogleUnlink()
                     },
                 text = "연결해제",
                 style = MaterialTheme.typography.subtitle1,
@@ -82,17 +83,17 @@ fun KakaoView(simpleSocialLoginSDK: SimpleSocialLoginSDK.Builder) {
         }
 
 
-        KakaoLoginStateView(simpleSocialLoginSDK.kakaoState.loginFlow)
-        KakaoLogoutStateView(simpleSocialLoginSDK.kakaoState.logoutFlow)
-        KakaoUnlinkStateView(simpleSocialLoginSDK.kakaoState.unlinkFlow)
+        GoogleLoginStateView(simpleSocialLoginSDK.googleState.loginFlow)
+        GoogleLogoutStateView(simpleSocialLoginSDK.googleState.logoutFlow)
+        GoogleUnlinkStateView(simpleSocialLoginSDK.googleState.unlinkFlow)
 
         Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), color = OutLine60)
     }
 }
 
-/** 카카오 로그인 텍스트 상태 */
+/** 구글 로그인 텍스트 상태 */
 @Composable
-private fun KakaoLoginStateView(loginStateFlow: StateFlow<LoginState<String>>) {
+private fun GoogleLoginStateView(loginStateFlow: StateFlow<LoginState<String>>) {
     with(loginStateFlow.collectAsState().value) {
         Text(
             modifier = Modifier
@@ -122,9 +123,9 @@ private fun KakaoLoginStateView(loginStateFlow: StateFlow<LoginState<String>>) {
     }
 }
 
-/** 카카오 로그아웃 텍스트 상태 */
+/** 구글 로그아웃 텍스트 상태 */
 @Composable
-private fun KakaoLogoutStateView(logoutStateFlow: StateFlow<LogoutState>) {
+private fun GoogleLogoutStateView(logoutStateFlow: StateFlow<LogoutState>) {
     with(logoutStateFlow.collectAsState().value) {
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -150,9 +151,9 @@ private fun KakaoLogoutStateView(logoutStateFlow: StateFlow<LogoutState>) {
     }
 }
 
-/** 카카오 연결끊기 텍스트 상태 */
+/** 구글 연결끊기 텍스트 상태 */
 @Composable
-private fun KakaoUnlinkStateView(unlinkStateFlow: StateFlow<UnlinkState>) {
+private fun GoogleUnlinkStateView(unlinkStateFlow: StateFlow<UnlinkState>) {
     with(unlinkStateFlow.collectAsState().value) {
         Text(
             modifier = Modifier.fillMaxWidth(),
