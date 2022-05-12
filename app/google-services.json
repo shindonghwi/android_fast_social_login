@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "135189940864",
-    "project_id": "simple-social-login-8ecdf",
-    "storage_bucket": "simple-social-login-8ecdf.appspot.com"
+    "project_number": "308128367516",
+    "project_id": "simplesocial-a51b9",
+    "storage_bucket": "simplesocial-a51b9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:135189940864:android:c27ce7bd0e5171c8d83465",
+        "mobilesdk_app_id": "1:308128367516:android:369f8d1297e2ea119dbe59",
         "android_client_info": {
           "package_name": "wolf.shin.simplesociallogin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "135189940864-ubpq542173j7bflrcaf4usm9v10mbhni.apps.googleusercontent.com",
+          "client_id": "308128367516-h1pn0g9depi0q6k45q4nu754klvva1p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "wolf.shin.simplesociallogin",
+            "certificate_hash": "f2a71f583991d7270ab93e8497ca502fa96d3883"
+          }
+        },
+        {
+          "client_id": "308128367516-sacmrpcp2ur2uucn2k15rtmkfu6u6071.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDvIWRKitOTJpC5zLszq7FldUkaSHONj54"
+          "current_key": "AIzaSyAlOmnRHRb0uhYyBAT7Js6AK9QFka7Zqh8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "135189940864-ubpq542173j7bflrcaf4usm9v10mbhni.apps.googleusercontent.com",
+              "client_id": "308128367516-sacmrpcp2ur2uucn2k15rtmkfu6u6071.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
