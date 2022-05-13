@@ -20,6 +20,17 @@
 ```
 파일 위치: Project Root
 ```
+
+### 2. Social Key 작성
+
+property에 키 정보를 담으면서 "" 여부가 중요하다.
+아래 "" 가 붙어야 하는것고 아닌 것이 있다. 아래 예시를 잘 보고 작성하자.
+
+```
+kakao.sdk.appkey="카카오 앱 키" => (""필수)
+kakao.sdk.nativekey=kakao카카오 앱 키 => (""붙으면안됨)
+google.client.id="Google Client Id" => (""필수)
+```
 <br/><br/>
 
 ## License 
